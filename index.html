@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aibar Shora — product manager who can build</title>
+  <meta name="description" content="Aibar Shora — product manager who can build. Web3 on Solana. Almaty, Kazakhstan.">
+  <meta name="theme-color" content="#f4f1e9">
+
+  <!-- ▼▼ Social link previews (Open Graph + Twitter).
+       The page works without this — only the preview IMAGE needs a real, absolute URL.
+       AFTER your first Vercel deploy, replace every  https://REPLACE-WITH-YOUR-DOMAIN
+       (3 spots below) with the URL Vercel gives you, e.g. https://aibar-shora.vercel.app
+       — no trailing slash. One-liner from the project folder:
+         sed -i '' 's|https://REPLACE-WITH-YOUR-DOMAIN|https://YOUR.vercel.app|g' index.html
+       then commit + redeploy. ▼▼ -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Aibar Shora">
+  <meta property="og:title" content="Aibar Shora — product manager who can build">
+  <meta property="og:description" content="Shipping in web3 on Solana — from on-chain perpetuals to an AI studio for musicians. Almaty, Kazakhstan. Open to opportunities.">
+  <meta property="og:url" content="https://REPLACE-WITH-YOUR-DOMAIN/">
+  <meta property="og:image" content="https://REPLACE-WITH-YOUR-DOMAIN/assets/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Aibar Shora — product manager who can build">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Aibar Shora — product manager who can build">
+  <meta name="twitter:description" content="Shipping in web3 on Solana — from on-chain perpetuals to an AI studio for musicians. Almaty, Kazakhstan.">
+  <meta name="twitter:image" content="https://REPLACE-WITH-YOUR-DOMAIN/assets/og.jpg">
+  <meta name="twitter:creator" content="@_aybarx">
+  <!-- ▲▲ Social link previews ▲▲ -->
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23201d17'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='21' fill='%23f4f1e9' text-anchor='middle'%3Ea%3C/text%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..600;1,6..72,200..500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ───────────────────────── Typewriter font (local) ───────────────────────── */
+    @font-face {
+      font-family: 'Univers Typewriter';
+      src: url('assets/OnlineWebFonts_COM_392e00a2f07ffe1b37ae52a887e1551e/Univers Next Typewriter W04 Rg/Web Fonts/5548f1e5d18d8712e4e4bf9cda006aa4.woff2') format('woff2'),
+           url('assets/OnlineWebFonts_COM_392e00a2f07ffe1b37ae52a887e1551e/Univers Next Typewriter W04 Rg/Web Fonts/5548f1e5d18d8712e4e4bf9cda006aa4.woff') format('woff');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    /* ───────────────────────── Design tokens ───────────────────────── */
+    :root {
+      --paper:       #f4f1e9;   /* bone white / cream            */
+      --paper-deep:  #ece7db;   /* slightly deeper band          */
+      --ink:         #201d17;   /* warm near-black               */
+      --ink-soft:    #5f574a;   /* secondary text                */
+      --ink-faint:   #a39a87;   /* labels, meta                  */
+      --line:        rgba(32,29,23,0.12);
+      --line-soft:   rgba(32,29,23,0.07);
+      --gold:        #9c6f23;   /* accent — ochre / typewriter ribbon */
+      --gold-soft:   rgba(156,111,35,0.12);
+      --emerald:     #3f7d57;   /* "live / online" */
+
+      --serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+      --mono:  'Univers Typewriter', 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+      --col: 760px;            /* reading column */
+      --pad: clamp(1.4rem, 5vw, 3rem);
+
+      /* ▼ how far the INDEX/hero content starts from the top of the screen.
+         Raise/lower the 10vh to taste (e.g. 6vh = higher, 20vh = lower). */
+      --index-top: clamp(3.5rem, 10vh, 7.5rem);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--serif);
+      font-optical-sizing: auto;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+    }
+
+    /* ───────────────────────── Ambient color field + grain ───────────────────────── */
+    /* gives the frosted modules something to actually blur, and adds gentle color */
+    .ambient {
+      position: fixed; inset: 0; z-index: -2; pointer-events: none; overflow: hidden;
+    }
+    .ambient::before, .ambient::after {
+      content: ""; position: absolute; border-radius: 50%; filter: blur(90px);
+    }
+    .ambient::before {
+      width: 60vw; height: 60vw; top: -18vw; left: -12vw;
+      background: radial-gradient(circle at 30% 30%, rgba(196,150,72,0.30), transparent 62%);
+    }
+    .ambient::after {
+      width: 58vw; height: 58vw; bottom: -22vw; right: -14vw;
+      background: radial-gradient(circle at 60% 60%, rgba(74,118,96,0.26), transparent 62%);
+    }
+    .ambient .blob3 {
+      position: absolute; width: 46vw; height: 46vw; top: 38%; left: 46%;
+      background: radial-gradient(circle, rgba(120,140,180,0.20), transparent 64%);
+      filter: blur(100px); border-radius: 50%;
+    }
+    .grain {
+      position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0.45;
+      mix-blend-mode: multiply;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+    }
+
+    /* ───────────────────────── Scroll progress ───────────────────────── */
+    #progress {
+      position: fixed; top: 0; left: 0; height: 2px; width: 0%;
+      background: var(--gold); z-index: 60; transition: width 0.1s linear;
+    }
+
+    /* ───────────────────────── Fixed chrome: wordmark + nav ───────────────────────── */
+    .mono { font-family: var(--mono); }
+
+    .wordmark {
+      position: fixed; top: var(--pad); left: var(--pad); z-index: 50;
+      font-family: var(--mono); line-height: 1.5;
+      mix-blend-mode: multiply;
+    }
+    .wordmark .name {
+      font-size: 0.78rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--ink); display: flex; align-items: center; gap: 0.5em;
+    }
+    .wordmark .pulse {
+      width: 6px; height: 6px; border-radius: 50%; background: var(--emerald);
+      box-shadow: 0 0 0 0 rgba(63,125,87,0.5); animation: pulse 2.4s ease-out infinite;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(63,125,87,0.45); }
+      70%,100% { box-shadow: 0 0 0 7px rgba(63,125,87,0); }
+    }
+    .wordmark .sub {
+      font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--ink-faint); margin-top: 0.45em;
+      font-variant-numeric: tabular-nums; /* clock updates without width shift */
+    }
+
+    nav.index {
+      position: fixed; top: var(--pad); right: var(--pad); z-index: 50;
+      display: flex; flex-direction: column; align-items: flex-end; gap: 0.18rem;
+      font-family: var(--mono); mix-blend-mode: multiply;
+    }
+    nav.index a {
+      font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--ink-faint); text-decoration: none; padding: 0.32rem 0.5rem;
+      border: 1px solid transparent; border-radius: 5px;
+      transition: color .2s, border-color .2s, background .2s, scale .12s ease;
+    }
+    nav.index a:hover { color: var(--ink); }
+    nav.index a:active { scale: 0.96; } /* tactile press */
+    nav.index a.active {
+      color: var(--ink); border-color: rgba(156,111,35,0.55);
+      background: var(--gold-soft);
+    }
+
+    /* ───────────────────────── Layout ───────────────────────── */
+    main { position: relative; z-index: 1; }
+    .section {
+      max-width: var(--col);
+      margin: 0 auto;
+      padding: clamp(5rem, 16vh, 10rem) var(--pad);
+      scroll-margin-top: 0;
+    }
+    #index.section {
+      min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-start;
+      padding-top: var(--index-top); padding-bottom: clamp(2rem, 5vh, 4rem);
+    }
+
+    .marker {
+      font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.26em;
+      text-transform: uppercase; color: var(--ink-faint);
+      margin-bottom: clamp(1.8rem, 5vh, 3.2rem);
+      display: flex; align-items: center; gap: 0.8em;
+    }
+    .marker::after {
+      content: ""; flex: 1; height: 1px; background: var(--line-soft);
+    }
+
+    /* ───────────────────────── Hero ───────────────────────── */
+    .hello {
+      font-size: clamp(2.6rem, 7vw, 4.4rem); font-weight: 360; line-height: 0.98;
+      letter-spacing: -0.015em; margin: 0 0 clamp(1.1rem, 3vh, 2.6rem);
+      text-wrap: balance;
+    }
+    .lead {
+      font-size: clamp(1.35rem, 3.1vw, 2.05rem); font-weight: 370; line-height: 1.42;
+      letter-spacing: -0.005em; color: var(--ink); margin: 0 0 1.1em; max-width: 22ch;
+      text-wrap: balance;
+    }
+    .lead.wide { max-width: 30ch; }
+    .lead em { font-style: italic; }
+    .accent-line {
+      font-style: italic; font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+      color: var(--ink-soft); line-height: 1.5; margin: 0.4em 0 0; max-width: 42ch;
+      text-wrap: pretty;
+    }
+    .accent-line a { color: var(--ink-soft); }
+
+    .status {
+      display: inline-flex; align-items: center; gap: 0.6em; margin-top: clamp(1.3rem, 3vh, 3rem);
+      font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--emerald); padding: 0.5em 0.9em; border: 1px solid rgba(63,125,87,0.4);
+      border-radius: 999px; background: rgba(63,125,87,0.07);
+    }
+    .status .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--emerald); }
+
+    /* ───────────────────────── Prose ───────────────────────── */
+    .prose p {
+      font-size: clamp(1.08rem, 1.7vw, 1.22rem); line-height: 1.62; color: var(--ink);
+      margin: 0 0 1.1em; max-width: 60ch; text-wrap: pretty;
+    }
+    .prose p .soft { color: var(--ink-soft); }
+    .prose strong { font-weight: 560; }
+    a { color: var(--ink); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+
+    /* ───────────────────────── Glass modules ───────────────────────── */
+    .glass {
+      background: rgba(255,253,247,0.55);
+      backdrop-filter: blur(22px) saturate(1.1);
+      -webkit-backdrop-filter: blur(22px) saturate(1.1);
+      border: 1px solid rgba(255,255,255,0.7);
+      border-radius: 16px;
+      box-shadow: 0 1px 0 rgba(255,255,255,0.8) inset,
+                  0 18px 40px -22px rgba(32,29,23,0.4);
+    }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: clamp(1.6rem, 4vh, 2.6rem); }
+    .tags span {
+      font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--ink-soft); padding: 0.3em 0.65em; border: 1px solid var(--line);
+      border-radius: 5px; background: rgba(255,255,255,0.35);
+    }
+
+    /* ───────────────────────── Featured project window ───────────────────────── */
+    .window {
+      margin: 0 0 clamp(2.5rem, 6vh, 4rem); overflow: hidden; border-radius: 16px;
+      text-decoration: none; display: block; color: inherit;
+      transition: scale .18s cubic-bezier(.2,0,0,1), box-shadow .25s ease;
+    }
+    .window:active { scale: 0.992; } /* subtle press on a large surface */
+    .window .bar {
+      display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 0.9rem;
+      border-bottom: 1px solid rgba(255,255,255,0.5); background: rgba(255,255,255,0.4);
+      font-family: var(--mono); font-size: 0.66rem; color: var(--ink-soft); letter-spacing: 0.05em;
+    }
+    .window .bar .traffic { display: flex; gap: 6px; }
+    .window .bar .traffic i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; opacity: 0.7; }
+    .window .bar .url { margin-left: auto; color: var(--ink-faint); }
+    .window .shot {
+      display: block; width: 100%; aspect-ratio: 16/9; object-fit: cover;
+      outline: 1px solid rgba(0,0,0,0.1); outline-offset: -1px; /* consistent edge depth */
+    }
+    .window .meta { padding: 1rem 1.1rem 1.15rem; display: flex; align-items: baseline; gap: 0.8rem; }
+    .window .meta h3 { font-size: 1.5rem; font-weight: 420; margin: 0; letter-spacing: -0.01em; }
+    .window .meta p { margin: 0; color: var(--ink-soft); font-size: 1rem; }
+    .window .meta .go {
+      margin-left: auto; font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--gold); white-space: nowrap;
+    }
+    .window:hover .meta .go { text-decoration: underline; text-underline-offset: 3px; }
+
+    .subhead {
+      font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.24em; text-transform: uppercase;
+      color: var(--ink-faint); margin: clamp(3.5rem, 9vh, 6rem) 0 1.4rem;
+    }
+    .exp { border-top: 1px solid var(--line); }
+    .exp .e {
+      display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
+      padding: 0.95rem 0.2rem; border-bottom: 1px solid var(--line-soft); font-size: 1.04rem;
+    }
+    .exp .e .role { color: var(--ink-soft); }
+    .exp .e .when { font-family: var(--mono); font-size: 0.66rem; color: var(--ink-faint); white-space: nowrap; letter-spacing: 0.06em; }
+
+    /* ───────────────────────── Writing ───────────────────────── */
+    .post { border-bottom: 1px solid var(--line); }
+    .post:first-child { border-top: 1px solid var(--line); }
+    .post summary {
+      list-style: none; cursor: pointer; display: flex; justify-content: space-between; gap: 1rem;
+      align-items: baseline; padding: 1.25rem 0.2rem; transition: padding .25s cubic-bezier(.2,0,0,1);
+    }
+    .post summary::-webkit-details-marker { display: none; }
+    .post[open] summary, .post summary:hover { padding-left: 0.8rem; }
+    .post summary .t { font-size: 1.3rem; font-weight: 400; letter-spacing: -0.005em; transition: color .2s; }
+    .post summary:hover .t { color: var(--gold); }
+    .post summary .m { font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.1em; color: var(--ink-faint); text-transform: uppercase; white-space: nowrap; padding-top: 0.4rem; }
+    .post .body {
+      padding: 0 0.2rem 1.5rem; max-width: 56ch;
+      font-size: 1.05rem; line-height: 1.6; color: var(--ink-soft); text-wrap: pretty;
+    }
+    .more { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-faint); margin-top: 1.6rem; }
+
+    /* ───────────────────────── Contact ───────────────────────── */
+    .contact-h { font-size: clamp(1.8rem, 4.4vw, 2.9rem); font-weight: 360; line-height: 1.12; letter-spacing: -0.012em; margin: 0 0 clamp(2rem, 5vh, 3rem); max-width: 18ch; text-wrap: balance; }
+    .links { display: flex; flex-direction: column; gap: 0.1rem; }
+    .links a {
+      font-family: var(--mono); font-size: 0.92rem; letter-spacing: 0.02em; color: var(--ink);
+      text-decoration: none; padding: 0.7rem 0; border-bottom: 1px solid var(--line);
+      display: flex; align-items: center; gap: 0.8rem; width: fit-content; min-width: 280px;
+      transition: color .2s, gap .2s, scale .12s ease;
+    }
+    .links a:hover { color: var(--gold); gap: 1.2rem; }
+    .links a:active { scale: 0.985; }
+    .links a .arr { margin-left: auto; color: var(--ink-faint); }
+    .signoff { font-style: italic; color: var(--ink-faint); margin-top: clamp(3rem, 7vh, 4.5rem); line-height: 1.5; font-size: 1.1rem; }
+
+    /* ───────────────────────── Cinematic footer ───────────────────────── */
+    footer { position: relative; height: clamp(440px, 64vh, 760px); overflow: hidden; margin-top: clamp(2rem, 6vh, 4rem); }
+    footer img {
+      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 58%;
+      /* single long, gently-eased feather: image is fully clear at the very top edge
+         (seamless cream join) and emerges slowly so the dark sky never bands */
+      -webkit-mask-image: linear-gradient(180deg,
+        transparent 0%, transparent 7%, rgba(0,0,0,0.035) 16%, rgba(0,0,0,0.10) 25%,
+        rgba(0,0,0,0.20) 33%, rgba(0,0,0,0.34) 40%, rgba(0,0,0,0.52) 47%,
+        rgba(0,0,0,0.72) 54%, rgba(0,0,0,0.89) 61%, #000 69%);
+      mask-image: linear-gradient(180deg,
+        transparent 0%, transparent 7%, rgba(0,0,0,0.035) 16%, rgba(0,0,0,0.10) 25%,
+        rgba(0,0,0,0.20) 33%, rgba(0,0,0,0.34) 40%, rgba(0,0,0,0.52) 47%,
+        rgba(0,0,0,0.72) 54%, rgba(0,0,0,0.89) 61%, #000 69%);
+    }
+    footer .grad2 { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgba(10,12,20,0.55) 100%); }
+    footer .cap {
+      position: absolute; left: var(--pad); right: var(--pad); bottom: clamp(1.4rem, 4vh, 2.4rem);
+      display: flex; justify-content: space-between; align-items: flex-end; gap: 1rem;
+      font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(255,255,255,0.92);
+    }
+    footer .cap .r { text-align: right; color: rgba(255,255,255,0.7); }
+    footer .cap .big { display: block; font-size: 0.8rem; letter-spacing: 0.24em; margin-bottom: 0.4em; }
+
+    /* ───────────────────────── Reveal animation (progressive) ───────────────────────── */
+    html.js .reveal { opacity: 0; transform: translateY(14px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,0,0,1); }
+    html.js .reveal.in { opacity: 1; transform: none; }
+
+    /* ───────────────────────── Responsive ───────────────────────── */
+    @media (max-width: 720px) {
+      :root { --pad: 1.2rem; }
+      .wordmark { position: absolute; }
+      nav.index { position: absolute; top: 1.2rem; flex-direction: row; flex-wrap: wrap; gap: 0.1rem; max-width: 58%; }
+      nav.index a { padding: 0.2rem 0.35rem; font-size: 0.6rem; }
+      .section { padding-top: 7rem; }
+      #index.section { padding-top: 8rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      html.js .reveal { opacity: 1; transform: none; transition: none; }
+      .wordmark .pulse { animation: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="ambient"><div class="blob3"></div></div>
+  <div class="grain"></div>
+  <div id="progress"></div>
+
+  <!-- Fixed chrome -->
+  <header class="wordmark">
+    <div class="name"><span class="pulse"></span>Aibar&nbsp;Shora</div>
+    <div class="sub" id="meta">—— · Almaty</div>
+  </header>
+
+  <nav class="index" aria-label="Sections">
+    <a href="#index"   data-sec="index"   class="active">Index</a>
+    <a href="#about"   data-sec="about">About</a>
+    <a href="#work"    data-sec="work">Work</a>
+    <a href="#writing" data-sec="writing">Writing</a>
+    <a href="#contact" data-sec="contact">Contact</a>
+  </nav>
+
+  <main>
+    <!-- 01 / INDEX -->
+    <section class="section" id="index">
+      <div class="marker reveal">01 / Index</div>
+      <h1 class="hello reveal">hello.</h1>
+      <p class="lead wide reveal">i'm aibar — a product manager who can build. a software engineer by training, shipping in web3, mostly on <em>solana</em>.</p>
+      <p class="lead reveal">i don't write specs and walk away. i ship — from an on-chain perpetuals app to an ai studio for musicians.</p>
+      <p class="accent-line reveal">currently building solana initiatives at <strong>Intebix</strong> and growing the ecosystem with <strong>Superteam Kazakhstan</strong>.</p>
+      <div class="status reveal"><span class="dot"></span>Open to opportunities</div>
+    </section>
+
+    <!-- 02 / ABOUT -->
+    <section class="section" id="about">
+      <div class="marker reveal">02 / About</div>
+      <div class="prose">
+        <p class="reveal">I've always been building startups — an on-chain perps app, AI motion-graphics studio for musicians, a proof-of-humanity protocol, a telegram trading bot. I'm technical enough to make product calls <strong>with</strong> engineers rather than around them, and I like being in the room where the building actually happens.</p>
+        <p class="reveal"><span class="soft">Open to what's next — a product, DevRel, or founding-team role where I can build and ship. Right now I'm doing RWA tokenization and a national stablecoin at <strong>Intebix</strong>, and growing the builder community across Central Asia with <strong>Superteam Kazakhstan</strong>.</span></p>
+      </div>
+
+      <div class="tags reveal">
+        <span>Solana</span><span>Superteam</span><span>RWA</span><span>Stablecoins</span>
+        <span>Intebix</span><span>AI Video</span><span>Perps</span><span>Design</span>
+      </div>
+    </section>
+
+    <!-- 03 / WORK -->
+    <section class="section" id="work">
+      <div class="marker reveal">03 / Selected Work</div>
+
+      <a class="glass window reveal" href="https://editing-studio.vercel.app" target="_blank" rel="noopener">
+        <div class="bar">
+          <span class="traffic"><i style="background:#e0746b"></i><i style="background:#e6b04a"></i><i style="background:#5aa86f"></i></span>
+          <span class="url">editing-studio.vercel.app</span>
+        </div>
+        <img class="shot" src="assets/lyric-studio.jpg" alt="LyricStudio — visualize your sound" loading="lazy">
+        <div class="meta">
+          <h3>LyricStudio</h3>
+          <p>AI motion-graphic lyric videos for musicians.</p>
+          <span class="go">beta ↗</span>
+        </div>
+      </a>
+
+      <a class="glass window reveal" href="https://the-pit-rho.vercel.app" target="_blank" rel="noopener">
+        <div class="bar">
+          <span class="traffic"><i style="background:#e0746b"></i><i style="background:#e6b04a"></i><i style="background:#5aa86f"></i></span>
+          <span class="url">the-pit-rho.vercel.app</span>
+        </div>
+        <img class="shot" src="assets/the-pit.jpg" alt="The Pit — on-chain perpetuals" loading="lazy">
+        <div class="meta">
+          <h3>The Pit</h3>
+          <p>Leveraged memecoin perpetuals, fully on-chain.</p>
+          <span class="go">live ↗</span>
+        </div>
+      </a>
+
+      <a class="glass window reveal" href="https://x.com/PalmaProtocol" target="_blank" rel="noopener">
+        <div class="bar">
+          <span class="traffic"><i style="background:#e0746b"></i><i style="background:#e6b04a"></i><i style="background:#5aa86f"></i></span>
+          <span class="url">x.com/PalmaProtocol</span>
+        </div>
+        <img class="shot" src="assets/palma.jpg" alt="Palma Protocol — your palm is your key" loading="lazy">
+        <div class="meta">
+          <h3>Palma Protocol</h3>
+          <p>Proof-of-humanity &amp; on-chain identity on Solana.</p>
+          <span class="go">mvp ↗</span>
+        </div>
+      </a>
+
+      <a class="glass window reveal" href="https://x.com/reframe_bot" target="_blank" rel="noopener">
+        <div class="bar">
+          <span class="traffic"><i style="background:#e0746b"></i><i style="background:#e6b04a"></i><i style="background:#5aa86f"></i></span>
+          <span class="url">x.com/reframe_bot</span>
+        </div>
+        <img class="shot" src="assets/reframe.jpg" alt="ReframeBot — trading on Telegram" loading="lazy">
+        <div class="meta">
+          <h3>ReframeBot</h3>
+          <p>Trading &amp; token discovery, native to Telegram on TON.</p>
+          <span class="go">shipped ↗</span>
+        </div>
+      </a>
+
+      <div class="subhead reveal">Experience</div>
+      <div class="exp reveal">
+        <div class="e"><span><strong>Intebix</strong> <span class="role">— Project Manager &amp; Ops</span></span><span class="when">2026 — now</span></div>
+        <div class="e"><span><strong>Superteam Kazakhstan</strong> <span class="role">— Community Organizer</span></span><span class="when">2025 — now</span></div>
+        <div class="e"><span><strong>Palma Protocol</strong> <span class="role">— Product Lead · 0 → MVP</span></span><span class="when">2025 — 2026</span></div>
+        <div class="e"><span><strong>CLS Global</strong> <span class="role">— Growth &amp; Partnerships</span></span><span class="when">2024</span></div>
+        <div class="e"><span><strong>Reframe</strong> <span class="role">— Product, Growth &amp; Ops</span></span><span class="when">2024</span></div>
+        <div class="e"><span><strong>Blockchain Center x Binance Academy</strong> <span class="role">— Educator &amp; Ecosystem</span></span><span class="when">2023 — 2024</span></div>
+      </div>
+    </section>
+
+    <!-- 04 / WRITING -->
+    <section class="section" id="writing">
+      <div class="marker reveal">04 / Writing</div>
+      <div class="reveal">
+        <details class="post" open>
+          <summary><span class="t">Building from Almaty</span><span class="m">Essay · 3m</span></summary>
+          <div class="body">The default map of crypto has a few capitals — and Central Asia isn't usually on it. Distance from the center forces a kind of honesty. Solana made shipping from here practical: cheap, fast, global by default.</div>
+        </details>
+        <details class="post">
+          <summary><span class="t">Yield on Conviction</span><span class="m">Note · 2m</span></summary>
+          <div class="body">Chasing the highest APY is how you donate to smarter people. I'd rather hold the assets I actually believe in — ETH, SOL — and let yield be a function of conviction.</div>
+        </details>
+        <details class="post">
+          <summary><span class="t">Faith, Finance, and On-Chain Rails</span><span class="m">Essay · 4m</span></summary>
+          <div class="body">Transparent settlement, real backing, no hidden interest. A surprising amount of what Islamic finance asks for is what good on-chain systems already do.</div>
+        </details>
+        <details class="post">
+          <summary><span class="t">What a Regulated Exchange Taught Me</span><span class="m">Note · 2m</span></summary>
+          <div class="body">Tokenizing a real-world asset is 10% smart contract and 90% the boring, human parts: custody, law, and who you call when something breaks.</div>
+        </details>
+        <div class="more">More writing — soon.</div>
+      </div>
+    </section>
+
+    <!-- 05 / CONTACT -->
+    <section class="section" id="contact">
+      <div class="marker reveal">05 / Correspondence</div>
+      <h2 class="contact-h reveal">i'm always open to talking about startups, community, or opportunities.</h2>
+      <div class="links reveal">
+        <a href="https://t.me/aybarii" target="_blank" rel="noopener">t.me/aybarii<span class="arr">↗</span></a>
+        <a href="https://x.com/_aybarx" target="_blank" rel="noopener">x.com/_aybarx<span class="arr">↗</span></a>
+        <a href="mailto:aybarshora@gmail.com">aybarshora@gmail.com<span class="arr">↗</span></a>
+      </div>
+     
+    </section>
+  </main>
+
+  <footer>
+    <img src="assets/footer-image2.jpg" alt="" aria-hidden="true">
+    <div class="grad2"></div>
+    <div class="cap">
+      <span><span class="big">aibar.shora //</span>write. break. learn. repeat.</span>
+      <span class="r">Never stop building<br>© 2026</span>
+    </div>
+  </footer>
+
+  <script>
+    document.documentElement.classList.add('js');
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Live clock in the wordmark sub-line
+    const meta = document.getElementById('meta');
+    function tick() {
+      const d = new Date();
+      let h = d.getHours(); const m = String(d.getMinutes()).padStart(2, '0');
+      const ap = h >= 12 ? 'PM' : 'AM'; h = h % 12 || 12;
+      meta.textContent = `${h}:${m} ${ap} · Almaty`;
+    }
+    tick(); setInterval(tick, 30000);
+
+    // Scroll progress bar
+    const progress = document.getElementById('progress');
+    function onScroll() {
+      const h = document.documentElement;
+      const max = h.scrollHeight - h.clientHeight;
+      progress.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+    }
+    addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+    // Scrollspy — highlight active nav item
+    const navLinks = [...document.querySelectorAll('nav.index a')];
+    const spy = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          navLinks.forEach(a => a.classList.toggle('active', a.dataset.sec === e.target.id));
+        }
+      });
+    }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+    document.querySelectorAll('main section').forEach(s => spy.observe(s));
+
+    // Reveal-on-scroll — stagger elements that appear together; lone ones fire immediately
+    if (!reduce) {
+      const rev = new IntersectionObserver((entries, obs) => {
+        let i = 0;
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.style.transitionDelay = (i++ * 80) + 'ms';
+            e.target.classList.add('in');
+            obs.unobserve(e.target);
+          }
+        });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+      document.querySelectorAll('.reveal').forEach(el => rev.observe(el));
+    } else {
+      document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+    }
+
+    // Keyboard nav — number keys jump to sections
+    const order = ['index', 'about', 'work', 'writing', 'contact'];
+    addEventListener('keydown', (e) => {
+      const tag = document.activeElement.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+      const n = parseInt(e.key, 10);
+      if (n >= 1 && n <= order.length) {
+        document.getElementById(order[n - 1]).scrollIntoView();
+      }
+    });
+  </script>
+</body>
+</html>
